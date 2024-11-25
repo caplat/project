@@ -1,0 +1,18 @@
+nav {
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+nav a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+#main-content {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
