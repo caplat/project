@@ -10,3 +10,4 @@ def page1(request):
 def page2(request):
     return render(request, 'myapp/page2.html')
 
+
