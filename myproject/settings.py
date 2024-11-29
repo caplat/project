@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+    'pong_game',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

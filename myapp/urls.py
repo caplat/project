@@ -6,5 +6,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('page1/', views.page1, name='page1'),
     path('page2/', views.page2, name='page2'),
-    path('<path:slug>/', lambda request, slug: redirect('home')),
+    # path('<path:slug>/', lambda request, slug: redirect('home')),
 ]

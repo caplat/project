@@ -14,10 +14,14 @@
 <body>
     <nav>
         <a href="/page1/">Page 1</a> |
-        <a href="/page2/">Page 2</a>
+        <a href="/page2/">Page 2</a> |
+        <a href="/pong/game/">Pong</a> |
+        <!-- <a href="/pong/game/">Jeu pong</a> -->
     </nav>
     <div id="main-content">
-        <h1>Bienvenue sur la page principale</h1>
+        {% block content %}
+            <h1>Bienvenue sur la page principale</h1>
+        {% endblock %}
     </div>
 </body>
 

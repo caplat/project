@@ -1,0 +1,17 @@
+[ req ]
+distinguished_name = req_distinguished_name
+prompt = no
+req_extensions = v3_req
+
+[ req_distinguished_name ]
+C = FR            # Country Name (2 letter code)
+ST = Paris        # State or Province
+L = Paris         # Locality (City)
+O = MyCompany     # Organization Name
+OU = IT           # Organizational Unit
+CN = localhost    # Common Name (typically your domain or IP)
+emailAddress = admin@mycompany.com  # Email Address
+
+[ v3_req ]
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
