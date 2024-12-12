@@ -1,10 +1,8 @@
 {% extends 'myapp/home.html' %}
 
-{% load static %}
-
 {% block content %}
-    <!-- <h1>Bienvenue dans le jeu Pong</h1> -->
-    <canvas id="pong" width="600" height="400"></canvas>
-    <script src="{% static 'pong_game/pong.js' %}" defer></script>
-
+  <h1>Jeu Pong</h1>
+  <canvas id="board"></canvas>
 {% endblock %}
+
+

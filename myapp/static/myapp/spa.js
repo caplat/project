@@ -1,37 +1,48 @@
-document.addEventListener('DOMContentLoaded', function(){
-    const maincontent = document.getElementById('main-content');
+const route = (event) => {
+    event.preventDefault();  // Empêche le comportement par défaut (rechargement de la page)
+    
+    // Met à jour l'URL sans recharger la page 
+    window.history.pushState({}, "", event.target.href);
+    
+    // Appelle la fonction pour charger le contenu de la nouvelle URL
+    handleLocation();
+};
 
-    // Fonction pour charger le contenu à partir de l'URL
-    function loadContent(url) {
-        fetch(url)  // Envoie une requête pour récupérer le contenu de l'URL
-            .then(response => response.text())  // Récupère la réponse sous forme de texte
-            .then(html => {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
+const handleLocation = async () => {
+    const path = window.location.pathname;  // Récupère le chemin de l'URL actuelle
+    
+    try {
+        // Fetch le contenu associé au chemin actuel
+        const response = await fetch(path);  // Assurez-vous que le serveur renvoie les bonnes pages
+        if (!response.ok) {
+            throw new Error("Page non trouvée");  // Lancer une erreur si la réponse n'est pas OK
+        }
+        const html = await response.text();  // Convertir la réponse en texte
+        
+        // Crée un élément temporaire pour isoler le contenu spécifique
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
 
-                maincontent.innerHTML = tempDiv.querySelector('#main-content').innerHTML
-            })
-            .catch(error => console.error('Erreur de chargement :', error));
+        // Récupère uniquement le contenu du bloc 'main-content'
+        const newContent = tempDiv.querySelector('#main-content');
+        if (newContent) {
+            document.getElementById('main-content').innerHTML = newContent.innerHTML;
+            if (path === "/pong/game/")
+                startPongGame()
+        } else {
+            throw new Error("Bloc 'main-content' introuvable");
+        }
+    } catch (error) {
+        // Affiche un message d'erreur si la page est introuvable
+        document.getElementById('main-content').innerHTML = "<h1>Page non trouvée</h1>";
     }
+};
 
-    // Ajouter un écouteur d'événements sur les liens pour changer le contenu
-    function setupLinks(){
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(event){
-                event.preventDefault();  // Empêche le comportement par défaut de rechargement de page
-                const url = this.getAttribute('href');  // Récupère l'URL du lien
-                loadContent(url);  // Charge le contenu sans recharger la page
-                window.history.pushState({}, '', url);  // Change l'URL sans recharger la page
-            });
-        });
-    }
+// Gère les changements d'historique (quand l'utilisateur clique sur "Précédent" ou "Suivant")
+window.onpopstate = handleLocation;
 
-    // Écouter l'événement 'popstate' pour charger le contenu lorsqu'on navigue dans l'historique
-    window.addEventListener('popstate', function() {
-        const url = window.location.pathname;  // Récupère l'URL actuelle
-        loadContent(url).then(() => setupLinks());  // Charge le contenu correspondant à cette URL
-    });
+// Expose la fonction route à l'objet window pour pouvoir l'utiliser dans d'autres parties du code
+window.route = route;
 
-    // Charger le contenu initial si une URL est déjà définie dans l'historique
-    loadContent(window.location.pathname).then(() => setupLinks());
-});
+// Appelle handleLocation dès le chargement de la page pour afficher le contenu initial
+handleLocation();

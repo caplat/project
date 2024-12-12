@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:13  # Utilisation de l'image officielle de PostgreSQL
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistance des données PostgreSQL
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB} # Nom de la base de données
+      POSTGRES_USER: ${POSTGRES_USER}    # Utilisateur PostgreSQL
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Mot de passe pour l'utilisateur
+    networks:
+      - app-network
+
+  django:
+    build: .  # Utilise le Dockerfile dans le répertoire actuel
+    # command: python manage.py runserver 0.0.0.0:8000  # Lancer Django
+    volumes:
+      - .:/app  # Monte le répertoire local dans le conteneur
+    ports:
+      - "8000:8000"  # Mappe le port 8000 du conteneur au port 8000 de l'hôte
+    depends_on:
+      - db  # Assure que le conteneur PostgreSQL est prêt avant de démarrer Django
+    networks:
+      - app-network
+    env_file:
+      - .env
+
+networks:
+  app-network:  # Réseau interne pour permettre la communication entre les services
+
+volumes:
+  postgres_data:  # Volume persistant pour stocker les données de PostgreSQL
