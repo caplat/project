@@ -25,6 +25,9 @@ done
 echo "Exécution des migrations..."
 python manage.py migrate
 
+#Creation du superutilisateur
+python manage.py createsuperuser --noinput || true
+
 # Démarrer le serveur Django en HTTPS
 echo "Démarrage du serveur Django..."
 python manage.py runserver_plus --cert-file cert.pem --key-file key.pem 0.0.0.0:8000

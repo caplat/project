@@ -1,0 +1,30 @@
+{% extends 'myapp/index.html' %}
+
+{% block content %}
+    <h1>Inscription</h1>
+    <div class="container">
+        <div class="form">
+            <form method="post" action="{% url 'registration' %}">
+                {% csrf_token %}
+                
+                <!-- Champs alignés verticalement avec un espacement -->
+                <div class="form-group mb-3">
+                    <label for="{{ form.username.id_for_label }}">Nom d'utilisateur</label>
+                    {{ form.username }} <!-- Champ Username -->
+                </div>
+                <div class="form-group mb-3">
+                    <label for="{{ form.password1.id_for_label }}">Mot de passe</label>
+                    {{ form.password1 }} <!-- Champ Password -->
+                </div>
+                <div class="form-group mb-3">
+                    <label for="{{ form.password2.id_for_label }}">Confirmer le mot de passe</label>
+                    {{ form.password2 }} <!-- Champ Password Confirmation -->
+                </div>
+
+                <button type="submit" class="btn btn-primary">S'inscrire</button>
+            </form>
+            <p class="link">Déjà inscrit ? <a href="{% url 'user_login' %}">Se connecter</a></p>
+        </div>   
+    </div>
+{% endblock %}
+

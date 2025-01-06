@@ -7,6 +7,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB} # Nom de la base de données
       POSTGRES_USER: ${POSTGRES_USER}    # Utilisateur PostgreSQL
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Mot de passe pour l'utilisateur
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
     networks:
       - app-network
 
@@ -23,9 +25,13 @@ services:
       - app-network
     env_file:
       - .env
-
+    environment:
+      DJANGO_SUPERUSER_USERNAME: ${SUPERUSER_USERNAME}
+      DJANGO_SUPERUSER_PASSWORD: ${SUPERUSER_PASSWORD}
+      DJANGO_SUPERUSER_EMAIL: ${SUPERUSER_EMAIL}
 networks:
   app-network:  # Réseau interne pour permettre la communication entre les services
+    driver: bridge
 
 volumes:
   postgres_data:  # Volume persistant pour stocker les données de PostgreSQL

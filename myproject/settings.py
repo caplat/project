@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('POSTGRES_DB', 'default_db_name'),          # Le nom de la base de données
-        'USER': os.getenv('POSTGRES_USER', 'default_user'),          # L'utilisateur PostgreSQL
+        'USER': os.getenv('POSTGRES_USER', 'default_user'),             # L'utilisateur PostgreSQL
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'default_password'),  # Le mot de passe de l'utilisateur PostgreSQL
         'HOST': os.getenv('DB_HOST', 'db'),                    # Utilisez le nom du service PostgreSQL dans docker-compose.yml (db)
         'PORT': os.getenv('DB_PORT', '5432'),                  # Le port de PostgreSQL (par défaut 5432)
@@ -136,3 +136,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
