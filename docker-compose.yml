@@ -11,6 +11,9 @@ services:
       DB_PORT: ${DB_PORT}
     networks:
       - app-network
+    ports:
+      - "5432:5432"
+    restart: always
 
   django:
     build: .  # Utilise le Dockerfile dans le répertoire actuel

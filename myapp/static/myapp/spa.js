@@ -1,4 +1,5 @@
 const route = (event) => {
+    console.log("test spa");
     event.preventDefault();  // Empêche le comportement par défaut (rechargement de la page)
     
     // Met à jour l'URL sans recharger la page 
@@ -27,13 +28,18 @@ const handleLocation = async () => {
         const newContent = tempDiv.querySelector('#main-content');
         if (newContent) {
             document.getElementById('main-content').innerHTML = newContent.innerHTML;
-            if (path === "/pong/game/")
-                startPongGame()
+            if (path === "/pong/game/") {
+                const board = document.getElementById('board');
+                if (board) {
+                    startPongGame();
+                }
+            }
         } else {
             throw new Error("Bloc 'main-content' introuvable");
         }
     } catch (error) {
         // Affiche un message d'erreur si la page est introuvable
+        console.error(error);
         document.getElementById('main-content').innerHTML = "<h1>Page non trouvée</h1>";
     }
 };

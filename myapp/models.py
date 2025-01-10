@@ -1,5 +1,7 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-class Utilisateur(models.Model):
-    nom = models.CharField(max_length=50)
-    mot_de_passe = models.CharField(max_length=50)
+class Utilisateur(AbstractUser):
+    alias = models.CharField(max_length=50, blank=True, null=True)
+
+

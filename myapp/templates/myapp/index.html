@@ -21,6 +21,16 @@
             <a href="/page2/" onclick="route(event)">Page 2</a> |
             <a href="/pong/game/" onclick="route(event)">Pong</a> |
             <a href="/tournament/" onclick="route(event)">Tournament</a>
+            <div class="d-flex">
+                {% if user.is_authenticated %}
+                <div class="ms-auto">
+                    <form method="POST" action="{% url 'user_logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Deconnexion</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
         </nav>
         <div id ="main-content">
             {% block content %}

@@ -10,5 +10,6 @@ urlpatterns = [
     # path('<path:slug>/', lambda request, slug: redirect('home')),
 
     path('registration/', views.registration, name='registration'),
-    path('login/', views.user_login, name='user_login'),
+    path('user_login/', views.user_login, name='user_login'),
+    path('logout/', views.user_logout, name='user_logout'),
 ]
