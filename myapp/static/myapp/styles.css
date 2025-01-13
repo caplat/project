@@ -1,18 +1,71 @@
+/* Barre de navigation */
 nav {
     background-color: #f8f9fa;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;  /* Séparer les zones gauche, centre, droite */
+    align-items: center;
 }
+
+/* Zone contenant le bouton "Utilisateurs" */
+nav .left {
+    display: flex;
+    align-items: center;
+}
+
+/* Liens de la barre de navigation (centrés) */
+nav .center {
+    display: flex;
+    justify-content: center;  /* Centrer les éléments à l'intérieur */
+    flex-grow: 1;  /* Occuper tout l'espace disponible pour centrer les éléments */
+}
+
 nav a {
     margin-right: 10px;
     text-decoration: none;
     color: #007bff;
 }
+
 nav a:hover {
     text-decoration: underline;
 }
+
+/* Zone contenant le bouton de déconnexion (à droite) */
+nav .right {
+    display: flex;
+    align-items: center;
+}
+
+/* Contenu principal */
 #main-content {
     margin: 20px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+
+/* Positionnement de la liste déroulante des utilisateurs */
+.dropdown {
+    margin-left: 10px;  /* Espacement entre le bouton Utilisateurs et les autres éléments */
+}
+
+/* Statut des utilisateurs (pastilles) */
+.user-status {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.user-status.me {
+    background-color: blue;
+}
+
+.user-status.connected {
+    background-color: green;
+}
+
+.user-status.disconnected {
+    background-color: red;
 }
