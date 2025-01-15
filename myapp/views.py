@@ -4,29 +4,27 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm
 from django.contrib import messages
-from .models import Utilisateur
 from django.contrib.auth import get_user_model
-from django.contrib.sessions.models import Session
-from django.utils import timezone
 
 User = get_user_model()
 
+@login_required(login_url='/user_login')
 def index(request):
     # Récupérer tous les utilisateurs
-    users_info = User.objects.all()
+    # users_info = User.objects.all()
 
-    # Récupérer toutes les sessions actives
-    active_sessions = Session.objects.filter(expire_date__gte=timezone.now())  # Les sessions qui n'ont pas expiré
-    active_user_ids = [session.get_decoded().get('_auth_user_id') for session in active_sessions]
+    # # Récupérer toutes les sessions actives
+    # active_sessions = Session.objects.filter(expire_date__gte=timezone.now())  # Les sessions qui n'ont pas expiré
+    # active_user_ids = [session.get_decoded().get('_auth_user_id') for session in active_sessions]
 
-    # Ajouter un attribut 'status' à chaque utilisateur
-    for user in users_info:
-        if str(user.id) in active_user_ids:
-            user.status = 'connected'  # Utilisateur connecté
-        else:
-            user.status = 'disconnected'  # Utilisateur déconnecté
+    # # Ajouter un attribut 'status' à chaque utilisateur
+    # for user in users_info:
+    #     if str(user.id) in active_user_ids:
+    #         user.status = 'connected'  # Utilisateur connecté
+    #     else:
+    #         user.status = 'disconnected'  # Utilisateur déconnecté
 
-    return render(request, 'index.html', {'users_info': users_info})
+    return render(request, 'myapp/index.html')
 
 @login_required(login_url='/user_login')
 def home(request):
@@ -75,6 +73,8 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
+            user.is_connected = True
+            user.save()
             messages.success(request, "Connexion réussie.")
             return redirect('/')  # Redirige vers la page principale après connexion
         else:
@@ -83,12 +83,7 @@ def user_login(request):
     return render(request, 'myapp/login.html')
 
 def user_logout(request):
+    request.user.is_connected = False
+    request.user.save()
     logout(request)
     return redirect('user_login')
-
-@login_required(login_url='/user_login')
-def index(request):
-    users_info = User.objects.all()
-    print(f"Users info: {users_info}")
-
-    return render(request, 'myapp/index.html', {'users_info': users_info})
